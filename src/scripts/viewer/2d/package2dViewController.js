@@ -3,7 +3,7 @@
  */
 
 require('./graphViewer');
-var getLocation = require('../getLocation.js');
+var generateSwitchMode = require('../switchMode')
 var createGraphBuilder = require('../graphBuilder');
 
 module.exports = function($scope, $routeParams, $http, $location) {
@@ -12,7 +12,8 @@ module.exports = function($scope, $routeParams, $http, $location) {
   // TODO: Remove root, it's no longer valid
   $scope.root = $routeParams.pkgId;
   $scope.showProgress = true;
-  $scope.switchMode = switchMode;
+  $scope.switchMode = generateSwitchMode($location, $routeParams, false);
+
 
   var graphBuilder = createGraphBuilder($routeParams.pkgId, $routeParams.version, $http, applyToScope(progressChanged));
   $scope.graph = graphBuilder.graph;
@@ -48,10 +49,5 @@ module.exports = function($scope, $routeParams, $http, $location) {
     $scope.showSwitchMode = true; // todo: check if it supports webgl
     $scope.showProgress = false;
     $scope.$root.$broadcast('graph-loaded', $scope.graph);
-  }
-
-  function switchMode() {
-    var path = getLocation($routeParams, /* is2d = */ false);
-    $location.path(path);
   }
 };

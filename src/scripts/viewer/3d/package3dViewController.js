@@ -1,13 +1,10 @@
 var create3DRenderer;
-var getLocation = require('../getLocation.js');
+var generateSwitchMode = require('../switchMode')
 
 module.exports = function($scope, $routeParams, $http, $location) {
   $scope.name = ' ' + $routeParams.pkgId;
 
-  $scope.switchMode = function() {
-    var path = getLocation($routeParams, /* is2d = */ true);
-    $location.path(path);
-  };
+  $scope.switchMode = generateSwitchMode($location, $routeParams, true);
 
   $scope.exportModel = function() {};
 
