@@ -1,5 +1,6 @@
 var create3DRenderer;
 var generateSwitchMode = require('../switchMode')
+var createGraphBuilder = require('../graphBuilder');
 
 module.exports = function($scope, $routeParams, $http, $location) {
   $scope.name = ' ' + $routeParams.pkgId;
@@ -8,7 +9,7 @@ module.exports = function($scope, $routeParams, $http, $location) {
 
   $scope.exportModel = function() {};
 
-  var graphBuilder = require('../graphBuilder')($routeParams.pkgId, $routeParams.version, $http);
+  var graphBuilder = createGraphBuilder($routeParams.pkgId, $routeParams.version, $http);
   graphBuilder.start.then(function() {
     // todo: check if it supports webgl
     if (!$scope.$$phase) {
